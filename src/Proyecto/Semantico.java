@@ -50,6 +50,8 @@ public class Semantico {
 				Lexico.errores.add("Error nombre de variable duplicada "+declaraciones.get(i).getNombre());
 		}
 	}
+	//Aquí válido las asignaciones, variables usadas y no declaradas, a su vez si las variables ya fueron declaradas
+	//De igual manera, aquí mismo se validan los operandos
 	public void checaValor(Identificador iden) {//Recibo la variable o identificador
 		String separado="";
 		StringTokenizer tokenizer;
@@ -121,6 +123,8 @@ public class Semantico {
 			Identificador temp = new Identificador(asignaciones.get(i).getValor(),declaraciones.get(sub).getTipo());
 			checaValor(temp);//Y mando a checar el valor
 			}
-		}
+		}		
 	}
+	
+	
 }

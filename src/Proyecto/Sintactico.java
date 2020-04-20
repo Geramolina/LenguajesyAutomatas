@@ -7,6 +7,7 @@ public class Sintactico {
 	//Token vacio=new Token(9,"","");//Por si esta vacio el token
 	int iniciador;
 	boolean error=false,errorS,banLlave=false,banPar=false;
+	//Aquí se crea la tabla de símbolos(01)
 	static  ArrayList<Identificador> TablaSimbolos;
 	public Sintactico() {
 		TablaSimbolos = new ArrayList<Identificador>();//Aqui guardo los identificadores
@@ -43,6 +44,7 @@ public class Sintactico {
 				String x =buscar(identificador.getNombre());
 				identificador.setTipo(x);
 			}
+			
 			System.out.println(identificador);
 		}
 	}
@@ -57,6 +59,7 @@ public class Sintactico {
 					errorS=true;
 				}
 				iniciador++;
+
 				continue;
 			}
 			if(Lexico.tokenAnalizados.get(iniciador).getTipo().equals("Identificador"))
@@ -67,7 +70,7 @@ public class Sintactico {
 					errorS=true;
 				}
 				if(Lexico.tokenAnalizados.get(iniciador-1).getTipo().equals("Clase"))
-					TablaSimbolos.add(new Identificador(Lexico.tokenAnalizados.get(iniciador).getValor(),"","Clase"));
+					TablaSimbolos.add(new Identificador("",Lexico.tokenAnalizados.get(iniciador).getValor(),"Clase",Lexico.tokenAnalizados.get(iniciador).getPosicion(),Lexico.tokenAnalizados.get(iniciador).getAlcance()));
 				iniciador++;
 				continue;
 			}
@@ -132,7 +135,7 @@ public class Sintactico {
 								valor+=Lexico.tokenAnalizados.get(iniciador).getValor();
 								iniciador++;
 							}
-							TablaSimbolos.add(new Identificador(iden,valor,a));
+							TablaSimbolos.add(new Identificador(iden,valor,a,Lexico.tokenAnalizados.get(iniciador-1).getPosicion(),Lexico.tokenAnalizados.get(iniciador-1).getAlcance()));
 						}else {
 							Lexico.errores.add("Error Sintactico se esperaba una constante o variable.");
 							errorS=true;
