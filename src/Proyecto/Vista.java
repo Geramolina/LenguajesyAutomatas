@@ -7,6 +7,11 @@ import javax.swing.*;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import javax.swing.table.*;
+
+import Proyecto.Cuadruplo;
+import Proyecto.Intermedio;
+import Proyecto.Lexico;
+import Proyecto.Sintactico;
 public class Vista extends JFrame implements ActionListener{
 	JMenuBar menuPrincipal;
 	JMenu opcion,analisis,generador;
@@ -153,18 +158,17 @@ public class Vista extends JFrame implements ActionListener{
 		}
 		/*Intermedio*/
 		if(e.getSource()==generador.getItem(0)) {
-			new Intermedio();
-			llena(inter,Result,Intermedio.asm);
-			generador.getItem(0).setEnabled(false);
+			new Intermedio(Sintactico.TablaSimbolos.get(Sintactico.TablaSimbolos.size()-1).nombre, Sintactico.TablaSimbolos.get(Sintactico.TablaSimbolos.size()-1).getValor(),Sintactico.TablaSimbolos.get(Sintactico.TablaSimbolos.size()-1).getNombre());
+			new Cuadruplo();
 			generador.getItem(2).setEnabled(true);
+			generador.getItem(0).setEnabled(false);
 		}
 		/*Objeto*/
-		if(e.getSource()==generador.getItem(2)) {
-			new Objeto();
-			llena(objeto,Result,Objeto.comienzo);
-			generador.getItem(0).setEnabled(false);
-			generador.getItem(2).setEnabled(true);
-		}
+		/*
+		 * if(e.getSource()==generador.getItem(2)) { new Objeto();
+		 * llena(objeto,Result,Objeto.comienzo); generador.getItem(0).setEnabled(false);
+		 * generador.getItem(2).setEnabled(true); }
+		 */
 	}
 	public boolean guardar() {
 		try {

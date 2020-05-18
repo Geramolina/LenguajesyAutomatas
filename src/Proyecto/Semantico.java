@@ -16,7 +16,7 @@ public class Semantico {
 		asignaciones= new ArrayList<Identificador>();
 		filtrar();//Mando a filtrar los identificadores asi como tambien asignaciones
 		checaDeclaraciones();//Mando a checar las declaraciones
-		//checaAsignaciones();//Mando a checar las asignaciones
+		checaAsignaciones();//Mando a checar las asignaciones
 		if(Lexico.errores.size()==2)
 			Lexico.errores.add("No hay errores semanticos");
 		CambiaValores();
@@ -48,6 +48,8 @@ public class Semantico {
 			}
 			if(contador==2)//Si aparece dos veces quiere decir que esta repetida
 				Lexico.errores.add("Error nombre de variable duplicada "+declaraciones.get(i).getNombre());
+			if (contador == 0)
+				Lexico.errores.add("Error nombre de variable no declarada "+declaraciones.get(i).getNombre());
 		}
 	}
 	//Aquí válido las asignaciones, variables usadas y no declaradas, a su vez si las variables ya fueron declaradas
@@ -69,10 +71,14 @@ public class Semantico {
 		    		if(pos==-1) {//En caso de que no encuentre la variable quiere decir que no esta declarada y mando un mensaje
 						Lexico.errores.add("Error la variable "+token+" no se encuentra declarada o el valor no es entero");
 					}else {//Quiere decir que si encontre la posicion por lo que hago un identificador temporal
-					Identificador temp = new Identificador(asignaciones.get(i).getValor(),declaraciones.get(pos).getTipo());
-					if(!iden.getTipo().equals(temp.getTipo()))
-						Lexico.errores.add("Error de asignacion, el dato no es entero");
-					}
+					if (asignaciones.size() >0)
+					{
+						Identificador temp = new Identificador(asignaciones.get(i).getValor(),declaraciones.get(pos).getTipo());
+						if(!iden.getTipo().equals(temp.getTipo()))
+							Lexico.errores.add("Error de asignacion, el dato no es entero");
+						}
+					}	
+					
 		    	}
 		    }
 			break;
@@ -102,6 +108,9 @@ public class Semantico {
 		case "boolean":
 			if(!Arrays.asList("true","false").contains(iden.getValor()))//Con esta expresion checo si es boolean
 				Lexico.errores.add("Error de asignacion, se esperaba un dato true o false");
+			break;
+		case "":
+			Lexico.errores.add("La variable no se encuentra declarada");
 			break;
 		}
 	}

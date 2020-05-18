@@ -5,3 +5,4 @@ public class Aplicacion {
 		//System.out.println(Integer.toBinaryString(a));
 	}
 }
+
